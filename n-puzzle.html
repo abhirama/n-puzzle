@@ -253,6 +253,33 @@
 					}
 
 					assignNumbersToBoard(numbers);
+					assignClickHandler();
+				}
+
+				function assignClickHandler() {
+					$('.cell').bind('click', function(){
+						if (isValidClick($(this))) {
+							var emptyCellId = getCellId(_emptyCellRow, _emptyCellColumn);
+							var emptyCell = document.getElementById(emptyCellId);
+
+							//assign empty cell row and column to the currently clicked cell
+							//do not move this piece of code as this has to be done before the nodes are swapped
+							_emptyCellRow = $(this).data('row');
+							_emptyCellColumn = $(this).data('column');
+
+							swapNodes(emptyCell, this);
+
+							_moveCounter = _moveCounter + 1;
+							$('#moveCount').text(_moveCounter);
+
+							if (isPuzzleSolved()) {
+								alert('You just solved the puzzle');
+								$('.cell').unbind('click');
+							}
+						} else {
+							alert('Invalid click');
+						}
+					});
 				}
 				//function definitions - end
 
@@ -263,29 +290,6 @@
 				createBoard(_boardRows, _boardColumns);
 
 				//event bindings - start
-				$('.cell').live('click', function(){
-					if (isValidClick($(this))) {
-						var emptyCellId = getCellId(_emptyCellRow, _emptyCellColumn);
-						var emptyCell = document.getElementById(emptyCellId);
-
-						//assign empty cell row and column to the currently clicked cell
-						//do not move this piece of code as this has to be done before the nodes are swapped
-						_emptyCellRow = $(this).data('row');
-						_emptyCellColumn = $(this).data('column');
-
-						swapNodes(emptyCell, this);
-
-						_moveCounter = _moveCounter + 1;
-						$('#moveCount').text(_moveCounter);
-
-						if (isPuzzleSolved()) {
-							alert('You just solved the puzzle');
-						}
-					} else {
-						alert('Invalid click');
-					}
-				});
-
 				$('#newGameButton').bind('click', function(){
 					var inputBoardRows = $('#boardRows').val();
 					var inputBoardColumns = $('#boardColumns').val();
