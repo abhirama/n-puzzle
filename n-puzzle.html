@@ -120,6 +120,14 @@
 					return false;
 				}
 
+				//http://stackoverflow.com/questions/698301/is-there-a-native-jquery-function-to-switch-elements
+				function swapNodes(a, b) {
+					var aParent= a.parentNode;
+					var aSibling= a.nextSibling === b ? a : a.nextSibling;
+					b.parentNode.insertBefore(a, b);
+					aParent.insertBefore(b, aSibling);
+				}
+
 				//inline - begin
 				createTable(INITIAL_ROWS, INITIAL_COLUMNS);
 				var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
@@ -128,7 +136,9 @@
 
 				$('.cell').bind('click', function(){
 					if (isValidClick($(this))) {
-						alert('Valid click');
+						var emptyCellId = getCellId(EMPTY_CELL_ROW, EMPTY_CELL_COLUMN);
+						var emptyCell = document.getElementById(emptyCellId);
+						swapNodes(emptyCell, this);
 					} else {
 						alert('Invalid click');
 					}
