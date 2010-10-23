@@ -32,6 +32,8 @@
 				function createTable(rows, columns) {
 					//using dom appending to create the table as it is more readable than string munging. 
 					//Not the most efficient way but for a small app like this it does not matter.
+					//takes care of the cases where the player resets the board
+					$('#mainContainer table').remove();
 					$('#mainContainer').append('<table border="1" cell-padding="1" cell-spacing="1" id="board"></table>');
 					for (var row = 0; row < rows; ++row) {
 						$('#board').append('<tr></tr>');
@@ -42,6 +44,10 @@
 							$('#' + id).data("column", column);
 						}
 					}
+
+					//the last values of rows and columns are the empty cell row and column values
+					_emptyCellRow = row - 1;
+					_emptyCellColumn = column - 1;
 				}
 
 				function getCellId(row, column) {
@@ -171,12 +177,32 @@
 					return solved;
 				}
 
+				function validateInputBoardValues(rows, columns) {
+					if (rows == 'undefined' || rows == '') {
+						alert('Please provide valid value for rows');
+						return false;
+					}
+
+					if (columns == 'undefined' || columns == '') {
+						alert('Please provide valid value for columns');
+						return false;
+					}
+
+					if (rows != columns) {
+						alert('Rows and columns have to match');
+						return false;
+					}
+
+					return true;
+				}
+
 				//inline - begin
 				createTable(INITIAL_ROWS, INITIAL_COLUMNS);
 				//var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
 				//shuffleNumberArray(numbers);
 				assignNumbersToBoard([3, 1, 2]);
 
+				//events bindings - start
 				$('.cell').bind('click', function(){
 					if (isValidClick($(this))) {
 						var emptyCellId = getCellId(_emptyCellRow, _emptyCellColumn);
@@ -199,14 +225,34 @@
 						alert('Invalid click');
 					}
 				});
+
+				$('#newGameButton').bind('click', function(){
+					var inputBoardRows = $('#boardRows').val();
+					var inputBoardColumns = $('#boardColumns').val();
+					if (validateInputBoardValues(inputBoardRows, inputBoardColumns)) {
+						INITIAL_ROWS = parseInt(inputBoardRows);
+						INITIAL_COLUMNS = parseInt(inputBoardColumns);
+
+						createTable(INITIAL_ROWS, INITIAL_COLUMNS);
+						var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
+						shuffleNumberArray(numbers);
+						assignNumbersToBoard(numbers);
+
+						_moveCounter = 0;
+					}
+				});
+				//events bindings - end
 				//inline - end 
 			});
 		</script>
 	</head>
 	<body>
-		<p>Moves:<div id="moveCount">0</div></p>
 		<div id="mainContainer">
 		</div>
+		<p><input type='text' value='3' id='boardRows'/>X<input type='text' value='3' id='boardColumns'/>
+			<input type='button' value='New Game' id='newGameButton'/>
+		</p>
+		<p>Moves:<div id="moveCount">0</div></p>
 	</body>
 </html>
 
