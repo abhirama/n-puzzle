@@ -7,6 +7,7 @@
 			table { 
 				margin-left: auto;
 				margin-right: auto;
+				text-align: center;
 			}
 		</style>
 
@@ -16,7 +17,7 @@
 				function createTable(rows, columns) {
 					//using dom appending to create the table as it is more readable than string munging. 
 					//Not the most efficient way but for a small app like this it does not matter.
-					$('#mainContainer').append('<table border="1" id="board"></table>');
+					$('#mainContainer').append('<table border="1" cell-padding="1" cell-spacing="1" id="board"></table>');
 					for (var row = 0; row < rows; ++row) {
 						$('#board').append('<tr></tr>');
 						for (var column = 0; column < columns; ++column) {
