@@ -199,14 +199,65 @@
 					return true;
 				}
 
+				function getInversionCount(numbers) {
+					var len = numbers.length;
+
+					var inversionCount = 0;
+					for (var outerIndex = 0; outerIndex < len; ++outerIndex) {
+						for (var innerIndex = outerIndex + 1; innerIndex < len; ++innerIndex) {
+							if (numbers[outerIndex] > numbers[innerIndex]) {
+								inversionCount = inversionCount + 1;
+							}
+						}
+					}
+
+					return inversionCount;
+				}
+
+				//http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
+				function isPuzzleSolvable(numbers) {
+					var inversionCount = getInversionCount(numbers);
+					var inversionCountEvent = (inversionCount % 2 == 0 ? true : false);
+					var gridWidthOdd = (_boardColumns % 2 == 1 ? true : false);
+					var blankCellOnOddRowFromBottom = true; //because in our case the last cell is always the blank one
+
+					if (gridWidthOdd) {
+						if (inversionCountEvent) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						if (blankCellOnOddRowFromBottom) {
+							return inversionCountEvent;
+						} else {
+							return !inversionCountEvent;
+						}
+					}
+
+					return false;
+				}
+
+				function createBoard(rows, columns) {
+					createTable(_boardRows, _boardColumns);
+
+					var numbers = getNumberArray(_boardRows, _boardColumns);
+					shuffleNumberArray(numbers);
+
+					//brute force until we get a solvable puzzle
+					while (!isPuzzleSolvable(numbers)) {
+						numbers = getNumberArray(_boardRows, _boardColumns);
+						shuffleNumberArray(numbers);
+					}
+
+					assignNumbersToBoard(numbers);
+				}
+
 				//inline - begin
-				createTable(_boardRows, _boardColumns);
-				//var numbers = getNumberArray(_boardRows, _boardColumns);
-				//shuffleNumberArray(numbers);
-				assignNumbersToBoard([3, 1, 2]);
+				createBoard(_boardRows, _boardColumns);
 
 				//events bindings - start
-				$('.cell').bind('click', function(){
+				$('.cell').live('click', function(){
 					if (isValidClick($(this))) {
 						var emptyCellId = getCellId(_emptyCellRow, _emptyCellColumn);
 						var emptyCell = document.getElementById(emptyCellId);
@@ -236,10 +287,7 @@
 						_boardRows = parseInt(inputBoardRows);
 						_boardColumns = parseInt(inputBoardColumns);
 
-						createTable(_boardRows, _boardColumns);
-						var numbers = getNumberArray(_boardRows, _boardColumns);
-						shuffleNumberArray(numbers);
-						assignNumbersToBoard(numbers);
+						createBoard(_boardRows, _boardColumns);
 
 						_moveCounter = 0;
 					}
