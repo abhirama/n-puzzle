@@ -8,11 +8,11 @@
 				function createTable(rows, columns) {
 					//using dom appending to create the table as it is more readable than string munging. 
 					//Not the most efficient way but for a small app like this it does not matter.
-					$("#mainContainer").append("<table></table>").attr("id", "board");
+					$('#mainContainer').append('<table border="1" id="board"></table>');
 					for (var row = 0; row < rows; ++row) {
-						$("#board").append("<tr></tr>");
+						$('#board').append('<tr></tr>');
 						for (var column = 0; column < columns; ++column) {
-							$("#board tr:last").append("<td></td>");
+							$('#board tr:last').append('<td></td>');
 						}
 					}
 				}
@@ -27,10 +27,11 @@
 					return numbers;
 				}
 
+				//using Fisher Yates algorithm
 				function shuffleNumberArray(numbers) {
 					var totalCount = numbers.length;
 					for (var index = 0; index < totalCount; ++index) {
-						var shuffleIndex = Math.floor(Math.random() * totalCount - 1);
+						var shuffleIndex = Math.floor(Math.random() * (totalCount - 1));
 						swap(index, shuffleIndex, numbers);
 					}
 				}
@@ -41,13 +42,21 @@
 					arrayy[secondIndex] = temp;
 				}
 
+				function assignNumbersToBoard(numbers) {
+					var index = 0;
+					$("#board td").each(function(){
+						$(this).text(numbers[index]);
+						index = index + 1;
+					});
+				}
+
 				//inline - begin
 				var INITIAL_ROWS = 4;
 				var INITIAL_COLUMNS = 4;
 				createTable(INITIAL_ROWS, INITIAL_COLUMNS);
 				var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
 				shuffleNumberArray(numbers);
-				console.log(numbers);
+				assignNumbersToBoard(numbers);
 				//inline - end 
 			});
 		</script>
