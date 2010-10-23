@@ -17,10 +17,37 @@
 					}
 				}
 
+				function getNumberArray(rows, columns) {
+					//generate an array that holds all the number applicable for the board
+					var totalCount = rows * columns;
+					var numbers = [];
+					for (var no = 1; no < totalCount; ++no) {
+						numbers.push(no);		
+					}
+					return numbers;
+				}
+
+				function shuffleNumberArray(numbers) {
+					var totalCount = numbers.length;
+					for (var index = 0; index < totalCount; ++index) {
+						var shuffleIndex = Math.floor(Math.random() * totalCount - 1);
+						swap(index, shuffleIndex, numbers);
+					}
+				}
+
+				function swap(firstIndex, secondIndex, arrayy) {
+					var temp = arrayy[firstIndex];
+					arrayy[firstIndex] = arrayy[secondIndex];
+					arrayy[secondIndex] = temp;
+				}
+
 				//inline - begin
 				var INITIAL_ROWS = 4;
 				var INITIAL_COLUMNS = 4;
 				createTable(INITIAL_ROWS, INITIAL_COLUMNS);
+				var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
+				shuffleNumberArray(numbers);
+				console.log(numbers);
 				//inline - end 
 			});
 		</script>
