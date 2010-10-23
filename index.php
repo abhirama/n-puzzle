@@ -4,7 +4,7 @@
 	$uid = getUserId();
 
 	if ($uid) {
-	 include 'quiz.php';
+	 include 'n-puzzle.php';
 	} else {
 	 $params = array(
 	 'next'          =>    PUZZLE_URL,
