@@ -122,10 +122,37 @@
 
 				//http://stackoverflow.com/questions/698301/is-there-a-native-jquery-function-to-switch-elements
 				function swapNodes(a, b) {
+					swapIds(a, b);
+					swapDataElements(a, b);
 					var aParent= a.parentNode;
 					var aSibling= a.nextSibling === b ? a : a.nextSibling;
 					b.parentNode.insertBefore(a, b);
 					aParent.insertBefore(b, aSibling);
+				}
+
+				function swapIds(nodeA, nodeB) {
+					var aId = nodeA.id;
+					var bId = nodeB.id;
+
+					nodeA.id = bId;
+					nodeB.id = aId;
+				}
+
+				function swapDataElements(nodeA, nodeB) {
+					var jQueryNodeA = $(nodeA);
+					var jQueryNodeB = $(nodeB);
+
+					var aDataRow = jQueryNodeA.data('row');
+					var aDataColumn = jQueryNodeA.data('column');
+
+					var bDataRow = jQueryNodeB.data('row');
+					var bDataColumn = jQueryNodeB.data('column');
+
+					jQueryNodeA.data('row', bDataRow);
+					jQueryNodeA.data('column', bDataColumn);
+
+					jQueryNodeB.data('row', aDataRow);
+					jQueryNodeB.data('column', aDataColumn);
 				}
 
 				//inline - begin
@@ -139,6 +166,9 @@
 						var emptyCellId = getCellId(EMPTY_CELL_ROW, EMPTY_CELL_COLUMN);
 						var emptyCell = document.getElementById(emptyCellId);
 						swapNodes(emptyCell, this);
+						//assign empty cell row and column to the currently clicked cell
+						EMPTY_CELL_ROW = $(this).data('row');
+						EMPTY_CELL_COLUMN = $(this).data('column');
 					} else {
 						alert('Invalid click');
 					}
