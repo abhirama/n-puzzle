@@ -26,6 +26,9 @@
 				var _emptyCellRow = INITIAL_ROWS - 1;
 				var _emptyCellColumn = INITIAL_COLUMNS - 1;
 
+				//to hold the no of steps the user takes to complete the puzzle
+				var _clickCounter = 0;
+
 				function createTable(rows, columns) {
 					//using dom appending to create the table as it is more readable than string munging. 
 					//Not the most efficient way but for a small app like this it does not matter.
@@ -172,6 +175,8 @@
 						_emptyCellColumn = $(this).data('column');
 
 						swapNodes(emptyCell, this);
+
+						_clickCounter = _clickCounter + 1;
 					} else {
 						alert('Invalid click');
 					}
