@@ -23,8 +23,8 @@
 				var INITIAL_COLUMNS = 4;
 
 				//global variable to hold the current empty cell row and column
-				var emptyCellRow = INITIAL_ROWS - 1;
-				var emptyCellColumn = INITIAL_COLUMNS - 1;
+				var _emptyCellRow = INITIAL_ROWS - 1;
+				var _emptyCellColumn = INITIAL_COLUMNS - 1;
 
 				function createTable(rows, columns) {
 					//using dom appending to create the table as it is more readable than string munging. 
@@ -84,7 +84,7 @@
 				}
 
 				function isEmptyCell(row, column) {
-					return row == emptyCellRow && column == emptyCellColumn;
+					return row == _emptyCellRow && column == _emptyCellColumn;
 				}
 
 				function isValidClick(cell) {
@@ -163,13 +163,13 @@
 
 				$('.cell').bind('click', function(){
 					if (isValidClick($(this))) {
-						var emptyCellId = getCellId(emptyCellRow, emptyCellColumn);
+						var emptyCellId = getCellId(_emptyCellRow, _emptyCellColumn);
 						var emptyCell = document.getElementById(emptyCellId);
 
 						//assign empty cell row and column to the currently clicked cell
 						//do not move this piece of code as this has to be done before the nodes are swapped
-						emptyCellRow = $(this).data('row');
-						emptyCellColumn = $(this).data('column');
+						_emptyCellRow = $(this).data('row');
+						_emptyCellColumn = $(this).data('column');
 
 						swapNodes(emptyCell, this);
 					} else {
