@@ -19,12 +19,12 @@
 		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
 		<script type="text/javascript">
 			$(document).ready(function(){
-				var INITIAL_ROWS = 2;
-				var INITIAL_COLUMNS = 2;
+				var _boardRows = 2;
+				var _boardColumns = 2;
 
 				//global variable to hold the current empty cell row and column
-				var _emptyCellRow = INITIAL_ROWS - 1;
-				var _emptyCellColumn = INITIAL_COLUMNS - 1;
+				var _emptyCellRow = _boardRows - 1;
+				var _emptyCellColumn = _boardColumns - 1;
 
 				//to hold the no of moves the user takes to complete the puzzle
 				var _moveCounter = 0;
@@ -165,7 +165,7 @@
 				}
 
 				function isPuzzleSolved() {
-					var cells = (INITIAL_ROWS * INITIAL_COLUMNS) - 1;
+					var cells = (_boardRows * _boardColumns) - 1;
 					var solved = true;
 					$('td').each(function(index){
 						if (index < cells && $(this).text() != (index + 1)) {
@@ -197,8 +197,8 @@
 				}
 
 				//inline - begin
-				createTable(INITIAL_ROWS, INITIAL_COLUMNS);
-				//var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
+				createTable(_boardRows, _boardColumns);
+				//var numbers = getNumberArray(_boardRows, _boardColumns);
 				//shuffleNumberArray(numbers);
 				assignNumbersToBoard([3, 1, 2]);
 
@@ -230,11 +230,11 @@
 					var inputBoardRows = $('#boardRows').val();
 					var inputBoardColumns = $('#boardColumns').val();
 					if (validateInputBoardValues(inputBoardRows, inputBoardColumns)) {
-						INITIAL_ROWS = parseInt(inputBoardRows);
-						INITIAL_COLUMNS = parseInt(inputBoardColumns);
+						_boardRows = parseInt(inputBoardRows);
+						_boardColumns = parseInt(inputBoardColumns);
 
-						createTable(INITIAL_ROWS, INITIAL_COLUMNS);
-						var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
+						createTable(_boardRows, _boardColumns);
+						var numbers = getNumberArray(_boardRows, _boardColumns);
 						shuffleNumberArray(numbers);
 						assignNumbersToBoard(numbers);
 
