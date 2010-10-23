@@ -19,6 +19,13 @@
 		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
 		<script type="text/javascript">
 			$(document).ready(function(){
+				var INITIAL_ROWS = 4;
+				var INITIAL_COLUMNS = 4;
+
+				//global variable to hold the current empty cell row and column
+				var EMPTY_CELL_ROW = INITIAL_ROWS - 1;
+				var EMPTY_CELL_COLUMN = INITIAL_COLUMNS - 1;
+
 				function createTable(rows, columns) {
 					//using dom appending to create the table as it is more readable than string munging. 
 					//Not the most efficient way but for a small app like this it does not matter.
@@ -32,6 +39,10 @@
 							$('#' + id).data("column", column);
 						}
 					}
+				}
+
+				function getCellId(row, column) {
+					return 'cell' + row + '' + column;
 				}
 
 				function getNumberArray(rows, columns) {
@@ -72,16 +83,8 @@
 					});
 				}
 
-				function getNumber(cell) {
-					return cell.text();
-				}
-
-				function isEmptyCell(cell) {
-					var numberr = getNumber(cell);
-					if (numberr == 'undefined' || numberr == '') {
-						return true;
-					}
-					return false;
+				function isEmptyCell(row, column) {
+					return row == EMPTY_CELL_ROW && column == EMPTY_CELL_COLUMN;
 				}
 
 				function isValidClick(cell) {
@@ -92,60 +95,32 @@
 
 					//check to left
 					var leftColumn = column - 1;
-					var validClick = validClickHelper(row, leftColumn);
-
-					if (validClick) {
+					if (isEmptyCell(row, leftColumn)) {
 						return true;
 					}
 
 					//check right
 					var rightColumn = column + 1;
-					validClick = validClickHelper(row, rightColumn);
-
-					if (validClick) {
+					if (isEmptyCell(row, rightColumn)) {
 						return true;
 					}
 
 					//check top
 					var topRow = row - 1;
-					validClick = validClickHelper(topRow, column);
-
-					if (validClick) {
+					if (isEmptyCell(topRow, column)) {
 						return true;
 					}
 
 					//check below 
 					var belowRow = row + 1;
-					validClick = validClickHelper(belowRow, column);
-
-					if (validClick) {
+					if (isEmptyCell(belowRow, column)) {
 						return true;
 					}
 
 					return false;
 				}
 
-				function validClickHelper(row, column) {
-					if (isInsideBoardBound(row, column)) {
-						var cellId = getCellId(row, column);
-						if (isEmptyCell($('#' + cellId))) {
-							return true;
-						}
-					}
-					return false;
-				}
-
-				function isInsideBoardBound(row, column) {
-					return row > 0 && column > 0 && row < INITIAL_ROWS && column < INITIAL_COLUMNS;
-				}
-
-				function getCellId(row, column) {
-					return 'cell' + row + '' + column;
-				}
-
 				//inline - begin
-				var INITIAL_ROWS = 4;
-				var INITIAL_COLUMNS = 4;
 				createTable(INITIAL_ROWS, INITIAL_COLUMNS);
 				var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
 				shuffleNumberArray(numbers);
