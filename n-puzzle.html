@@ -9,6 +9,10 @@
 				margin-right: auto;
 				text-align: center;
 			}
+
+			.cell {
+				background-color: red;
+			}
 		</style>
 
 		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
@@ -53,8 +57,13 @@
 
 				function assignNumbersToBoard(numbers) {
 					var index = 0;
-					$("#board td").each(function(){
+					$('#board td').each(function(){
+						if (index == numbers.length) {
+							return;
+						}
+
 						$(this).text(numbers[index]);
+						$(this).addClass('cell');
 						index = index + 1;
 					});
 				}
