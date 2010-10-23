@@ -165,10 +165,13 @@
 					if (isValidClick($(this))) {
 						var emptyCellId = getCellId(EMPTY_CELL_ROW, EMPTY_CELL_COLUMN);
 						var emptyCell = document.getElementById(emptyCellId);
-						swapNodes(emptyCell, this);
+
 						//assign empty cell row and column to the currently clicked cell
+						//do not move this piece of code as this has to be done before the nodes are swapped
 						EMPTY_CELL_ROW = $(this).data('row');
 						EMPTY_CELL_COLUMN = $(this).data('column');
+
+						swapNodes(emptyCell, this);
 					} else {
 						alert('Invalid click');
 					}
