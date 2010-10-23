@@ -258,6 +258,7 @@
 					assignClickHandler();
 				}
 
+
 				function assignClickHandler() {
 					$('.cell').bind('click', function(){
 						if (isValidClick($(this))) {
@@ -277,17 +278,23 @@
 							if (isPuzzleSolved()) {
 								alert('You just solved the puzzle');
 								$('.cell').unbind('click');
+								$("#share").show();
 							}
 						} else {
 							alert('Invalid click');
 						}
 					});
 				}
+
+				
 				//function definitions - end
 
 				//inline - start 
 				$('#boardRows').val(_boardRows);
 				$('#boardColumns').val(_boardColumns);
+
+				//share link will be shown only on successfully solve
+				$("#share").hide();
 
 				createBoard(_boardRows, _boardColumns);
 
@@ -307,14 +314,46 @@
 				//event bindings - end
 				//inline - end 
 			});
+
+
+			function wallPublish() {	
+				FB.ui(
+					 {
+						 method: 'stream.publish',
+						 message: 'I am here',
+						 attachment: {
+							 name: 'n-puzzle',
+							 caption: 'caption',
+							 description: (
+								 'description'
+							 )
+						 },
+						 action_links: [
+							 { text: 'share text', href: 'http://www.google.com/' }
+						 ],
+						 user_message_prompt: '<?php echo FACEBOOK_SHARE_USER_MESSAGE_PROMPT; ?>'
+					 },
+					 function(response) {
+						 $("#share").hide();
+						 if (response && response.post_id) {
+							 document.location.href = "n-puzzle.php";
+						 } else {
+							 document.location.href = "n-puzzle.php";
+						 }
+					 }
+				 );
+			}
 		</script>
 	</head>
 	<body>
+		<?php require_once "load_facebook_js.php"; ?>
+
 		<div id="mainContainer">
 		</div>
 		<p><input type='text' id='boardRows'/>X<input type='text' id='boardColumns'/>
 			<input type='button' value='New Game' id='newGameButton'/>
 		</p>
 		<p>Moves:<div id="moveCount">0</div></p>
+		<p><a href="javascript:void(0)" id="share" onclick="wallPublish(); return false;">Publish to wall</a></p>
 	</body>
 </html>
