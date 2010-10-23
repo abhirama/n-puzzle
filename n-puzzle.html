@@ -19,8 +19,8 @@
 		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
 		<script type="text/javascript">
 			$(document).ready(function(){
-				var INITIAL_ROWS = 4;
-				var INITIAL_COLUMNS = 4;
+				var INITIAL_ROWS = 2;
+				var INITIAL_COLUMNS = 2;
 
 				//global variable to hold the current empty cell row and column
 				var _emptyCellRow = INITIAL_ROWS - 1;
@@ -158,11 +158,24 @@
 					jQueryNodeB.data('column', aDataColumn);
 				}
 
+				function isPuzzleSolved() {
+					var cells = (INITIAL_ROWS * INITIAL_COLUMNS) - 1;
+					var solved = true;
+					$('td').each(function(index){
+						if (index < cells && $(this).text() != (index + 1)) {
+							solved = false;
+							return false;
+						}
+						solved = true;
+					});
+					return solved;
+				}
+
 				//inline - begin
 				createTable(INITIAL_ROWS, INITIAL_COLUMNS);
-				var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
-				shuffleNumberArray(numbers);
-				assignNumbersToBoard(numbers);
+				//var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
+				//shuffleNumberArray(numbers);
+				assignNumbersToBoard([3, 1, 2]);
 
 				$('.cell').bind('click', function(){
 					if (isValidClick($(this))) {
@@ -178,6 +191,10 @@
 
 						_moveCounter = _moveCounter + 1;
 						$('#moveCount').text(_moveCounter);
+
+						if (isPuzzleSolved()) {
+							alert('You just solved the puzzle');
+						}
 					} else {
 						alert('Invalid click');
 					}
