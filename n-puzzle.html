@@ -2,8 +2,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
+		<script type="text/javascript">
+			$(document).ready(function(){
+				function createTable(rows, columns) {
+					//using dom appending to create the table as it is more readable than string munging. 
+					//Not the most efficient way but for a small app like this it does not matter.
+					$("#mainContainer").append("<table></table>").attr("id", "board");
+					for (var row = 0; row < rows; ++row) {
+						$("#board").append("<tr></tr>");
+						for (var column = 0; column < columns; ++column) {
+							$("#board tr:last").append("<td></td>");
+						}
+					}
+				}
+
+				//inline - begin
+				var INITIAL_ROWS = 4;
+				var INITIAL_COLUMNS = 4;
+				createTable(INITIAL_ROWS, INITIAL_COLUMNS);
+				//inline - end 
+			});
+		</script>
 	</head>
 	<body>
+		<div id="mainContainer">
+		</div>
 	</body>
 </html>
 
