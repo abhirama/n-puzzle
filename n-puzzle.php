@@ -290,18 +290,16 @@
 					FB.ui(
 						 {
 							 method: 'stream.publish',
-							 message: 'I am here',
+							 message: 'I just Solved ' + _boardColumns + '-puzzle',
 							 attachment: {
 								 name: 'n-puzzle',
-								 caption: 'caption',
 								 description: (
-									 'description'
+									 'I solved ' + _boardColumns + '-puzzle in ' + _moveCounter + ' moves.'
 								 )
 							 },
 							 action_links: [
-								 { text: 'share text', href: 'http://www.google.com/' }
-							 ],
-							 user_message_prompt: '<?php echo FACEBOOK_SHARE_USER_MESSAGE_PROMPT; ?>'
+								 { text: 'n-puzzle', href: 'http://apps.facebook.com/npuzzle' }
+							 ]
 						 },
 						 function(response) {
 							 $("#share").hide();
