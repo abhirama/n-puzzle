@@ -26,8 +26,8 @@
 				var _emptyCellRow = INITIAL_ROWS - 1;
 				var _emptyCellColumn = INITIAL_COLUMNS - 1;
 
-				//to hold the no of steps the user takes to complete the puzzle
-				var _clickCounter = 0;
+				//to hold the no of moves the user takes to complete the puzzle
+				var _moveCounter = 0;
 
 				function createTable(rows, columns) {
 					//using dom appending to create the table as it is more readable than string munging. 
@@ -176,7 +176,8 @@
 
 						swapNodes(emptyCell, this);
 
-						_clickCounter = _clickCounter + 1;
+						_moveCounter = _moveCounter + 1;
+						$('#moveCount').text(_moveCounter);
 					} else {
 						alert('Invalid click');
 					}
@@ -186,6 +187,7 @@
 		</script>
 	</head>
 	<body>
+		<p>Moves:<div id="moveCount">0</div></p>
 		<div id="mainContainer">
 		</div>
 	</body>
