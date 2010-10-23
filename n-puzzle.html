@@ -26,9 +26,10 @@
 					for (var row = 0; row < rows; ++row) {
 						$('#board').append('<tr></tr>');
 						for (var column = 0; column < columns; ++column) {
-							//assigning id in this way will help us identify each cell in code easliy
-							var id = 'cell' + row + '' + column;
+							var id = getCellId(row, column);
 							$('#board tr:last').append('<td id=' + id + '></td>');
+							$('#' + id).data("row", row);
+							$('#' + id).data("column", column);
 						}
 					}
 				}
@@ -71,6 +72,77 @@
 					});
 				}
 
+				function getNumber(cell) {
+					return cell.text();
+				}
+
+				function isEmptyCell(cell) {
+					var numberr = getNumber(cell);
+					if (numberr == 'undefined' || numberr == '') {
+						return true;
+					}
+					return false;
+				}
+
+				function isValidClick(cell) {
+					var row = cell.data('row');
+					var column = cell.data('column');
+
+					//blindly check the four cells bounding this cell for empty space. If found, valid click. Else invalid
+
+					//check to left
+					var leftColumn = column - 1;
+					var validClick = validClickHelper(row, leftColumn);
+
+					if (validClick) {
+						return true;
+					}
+
+					//check right
+					var rightColumn = column + 1;
+					validClick = validClickHelper(row, rightColumn);
+
+					if (validClick) {
+						return true;
+					}
+
+					//check top
+					var topRow = row - 1;
+					validClick = validClickHelper(topRow, column);
+
+					if (validClick) {
+						return true;
+					}
+
+					//check below 
+					var belowRow = row + 1;
+					validClick = validClickHelper(belowRow, column);
+
+					if (validClick) {
+						return true;
+					}
+
+					return false;
+				}
+
+				function validClickHelper(row, column) {
+					if (isInsideBoardBound(row, column)) {
+						var cellId = getCellId(row, column);
+						if (isEmptyCell($('#' + cellId))) {
+							return true;
+						}
+					}
+					return false;
+				}
+
+				function isInsideBoardBound(row, column) {
+					return row > 0 && column > 0 && row < INITIAL_ROWS && column < INITIAL_COLUMNS;
+				}
+
+				function getCellId(row, column) {
+					return 'cell' + row + '' + column;
+				}
+
 				//inline - begin
 				var INITIAL_ROWS = 4;
 				var INITIAL_COLUMNS = 4;
@@ -78,6 +150,14 @@
 				var numbers = getNumberArray(INITIAL_ROWS, INITIAL_COLUMNS);
 				shuffleNumberArray(numbers);
 				assignNumbersToBoard(numbers);
+
+				$('.cell').bind('click', function(){
+					if (isValidClick($(this))) {
+						alert('Valid click');
+					} else {
+						alert('Invalid click');
+					}
+				});
 				//inline - end 
 			});
 		</script>
