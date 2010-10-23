@@ -19,11 +19,9 @@
 		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
 		<script type="text/javascript">
 			$(document).ready(function(){
+				//global variable declarations - start
 				var _boardRows = 2;
 				var _boardColumns = 2;
-
-				$('#boardRows').val(_boardRows);
-				$('#boardColumns').val(_boardColumns);
 
 				//global variable to hold the current empty cell row and column
 				var _emptyCellRow = _boardRows - 1;
@@ -31,12 +29,16 @@
 
 				//to hold the no of moves the user takes to complete the puzzle
 				var _moveCounter = 0;
+				//global variable declarations - end
 
+				//function definitions - start
 				function createTable(rows, columns) {
 					//using dom appending to create the table as it is more readable than string munging. 
 					//Not the most efficient way but for a small app like this it does not matter.
+
 					//takes care of the cases where the player resets the board
 					$('#mainContainer table').remove();
+
 					$('#mainContainer').append('<table border="1" cell-padding="1" cell-spacing="1" id="board"></table>');
 					for (var row = 0; row < rows; ++row) {
 						$('#board').append('<tr></tr>');
@@ -252,11 +254,15 @@
 
 					assignNumbersToBoard(numbers);
 				}
+				//function definitions - end
 
-				//inline - begin
+				//inline - start 
+				$('#boardRows').val(_boardRows);
+				$('#boardColumns').val(_boardColumns);
+
 				createBoard(_boardRows, _boardColumns);
 
-				//events bindings - start
+				//event bindings - start
 				$('.cell').live('click', function(){
 					if (isValidClick($(this))) {
 						var emptyCellId = getCellId(_emptyCellRow, _emptyCellColumn);
@@ -292,7 +298,7 @@
 						_moveCounter = 0;
 					}
 				});
-				//events bindings - end
+				//event bindings - end
 				//inline - end 
 			});
 		</script>
