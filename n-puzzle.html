@@ -22,6 +22,9 @@
 				var _boardRows = 2;
 				var _boardColumns = 2;
 
+				$('#boardRows').val(_boardRows);
+				$('#boardColumns').val(_boardColumns);
+
 				//global variable to hold the current empty cell row and column
 				var _emptyCellRow = _boardRows - 1;
 				var _emptyCellColumn = _boardColumns - 1;
@@ -249,7 +252,7 @@
 	<body>
 		<div id="mainContainer">
 		</div>
-		<p><input type='text' value='3' id='boardRows'/>X<input type='text' value='3' id='boardColumns'/>
+		<p><input type='text' id='boardRows'/>X<input type='text' id='boardColumns'/>
 			<input type='button' value='New Game' id='newGameButton'/>
 		</p>
 		<p>Moves:<div id="moveCount">0</div></p>
