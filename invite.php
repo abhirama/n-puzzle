@@ -9,7 +9,7 @@
 <head>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8" />
 </head>
-<body onload="init()">
+<body>
 	<?php
 	if ($uid) {
 			$_allFriends = $facebook->api('/me/friends');
