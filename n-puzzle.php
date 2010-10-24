@@ -12,6 +12,12 @@
 				text-align: center;
 			}
 
+			table tr td {
+				border: 0;
+				width: 50px;		
+				height: 50px;
+			}
+
 			.cell {
 				background-color: red;
 				cursor: pointer;
@@ -20,6 +26,7 @@
 			.fRight {
 				float: right;
 			}
+
 		</style>
 
 		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
@@ -43,9 +50,9 @@
 					//Not the most efficient way but for a small app like this it does not matter.
 
 					//takes care of the cases where the player resets the board
-					$('#mainContainer table').remove();
+					$('#boardContainer table').remove();
 
-					$('#mainContainer').append('<table border="1" cell-padding="1" cell-spacing="1" id="board"></table>');
+					$('#boardContainer').append('<table border="1" cell-padding="1" cell-spacing="1" id="board"></table>');
 					for (var row = 0; row < rows; ++row) {
 						$('#board').append('<tr></tr>');
 						for (var column = 0; column < columns; ++column) {
@@ -355,7 +362,7 @@
 		<?php require_once "load_facebook_js.php"; ?>
 
 		<div class="fRight"><fb:bookmark/></div>
-		<div id="mainContainer">
+		<div id="boardContainer">
 		</div>
 		<p><input type='text' id='boardRows'/>X<input type='text' id='boardColumns'/>
 			<input type='button' value='New Game' id='newGameButton'/>
