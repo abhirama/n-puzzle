@@ -21,13 +21,13 @@
 				}
 			}
 
-			// Retrieve array of friends who've already authorized the app.
+			//retrieve array of friends who've already authorized the app.
 			$_appUsingfriends = $facebook->api(array(
 				'method' => 'fql.query',
 				'query' => 'SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1='.$uid.') AND is_app_user = 1',
 			));
 
-			// Extract the user ID's returned in the FQL request into a new array.
+			//extract the user ID's returned in the FQL request into a new array.
 			$appUsingfriends = array();
 			if (is_array($_appUsingfriends) && count($_appUsingfriends)) {
 				foreach ($_appUsingfriends as $friend) {
@@ -35,15 +35,12 @@
 				}
 			}
 
-
-			if (count($appUsingfriends) == count($allFriends)) {
-				// Convert the array of friends into a comma-delimited string.
-				$friends = implode(',', $friends);
+			//check whether all your friends are not using the app
+			if (count($appUsingfriends) != count($allFriends)) {
+				// Convert the array of app using friends into a comma-delimited string.
+				$friendsToExclude = implode(',', $appUsingfriends);
 				//todo has to be removed after testing
-				$friends = "";
-				// Prepare the invitation text that all invited users will receive.
-
-				$content = sprintf(FACEBOOK_INVITE_CONTENT);
+				//$friends = "";
 			?>
 
 			<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
@@ -62,9 +59,8 @@
 				<fb:fbml>
 					<fb:request-form
 						method="post"
-						action="n-puzzle.php"
 						type="<?php echo APP_NAME; ?>"
-						content="<?php echo htmlentities($content, ENT_COMPAT, 'UTF-8'); ?>" 
+						action="<?php echo PUZZLE_URL; ?>"
 						style="width:100%;">
 						<fb:multi-friend-selector	actiontext="Invite your friends to try <?php echo APP_NAME; ?>" 
 																			exclude_ids="<?php echo $friends; ?>" 
