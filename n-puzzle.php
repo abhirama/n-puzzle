@@ -23,12 +23,18 @@
 				cursor: pointer;
 			}
 
+			.actionLinkContainer {
+				position: relative;
+			}
+
 			.fRight {
-				float: right;
+				position: absolute;
+				right: 0;
 			}
 
 			.fLeft {
-				float: left;
+				position: absolute;
+				left: 0;
 			}
 
 			/*http://forum.developers.facebook.net/viewtopic.php?pid=15444*/
@@ -50,10 +56,28 @@
 			}
 
 			.moveCountContainer {
-				background-color: #F6F9F9;
+				background-color: #F9C396;
 				padding: 5px;
 				margin: 2px;
 				font-family: "Trebuchet MS", tahoma, verdana, arial, sans-serif;
+			}
+
+			.introduction {
+				background-color: #F6F9F9;
+				padding: 5px;
+				margin: 2px;
+				font-weight: bold;
+			}
+
+			.messageContainer {
+				height: 30px;
+			}
+
+			.message {
+				padding: 5px;
+				margin-top: 10px;
+				font-weight: bold;
+				text-align: center;
 			}
 		</style>
 
@@ -225,17 +249,50 @@
 
 				function validateInputBoardValues(rows, columns) {
 					if (rows == 'undefined' || rows == '') {
-						alert('Please provide valid value for rows');
+						displayMessage({
+							"text": "Please provide valid value for row",
+							"type": "warning"
+						});
 						return false;
 					}
 
 					if (columns == 'undefined' || columns == '') {
-						alert('Please provide valid value for columns');
+						displayMessage({
+							"text": "Please provide valid value for column",
+							"type": "warning"
+						});
 						return false;
 					}
 
-					if (rows != columns) {
-						alert('Rows and columns have to match');
+					if (rows < 2 || columns < 2) {
+						displayMessage({
+							"text": "Come on, even a baby can solve this. Provide a row value greater than 2",
+							"type": "warning"
+						});
+						return false;
+					}
+
+					if (columns < 2) {
+						displayMessage({
+							"text": "Come on, even a baby can solve this. Provide a column value greater than 2",
+							"type": "warning"
+						});
+						return false;
+					}
+
+					if (rows > 8) {
+						displayMessage({
+							"text": "Come on, be realistic. The row value is way too big",
+							"type": "warning"
+						});
+						return false;
+					}
+
+					if (columns > 8) {
+						displayMessage({
+							"text": "Come on, be realistic. The column value is way too big",
+							"type": "warning"
+						});
 						return false;
 					}
 
@@ -297,6 +354,28 @@
 					assignClickHandler();
 				}
 
+				function displayMessage(messageObject) {
+					var messageString = '<div class="message">__MESSAGE__</div>';
+					var messageString = messageString.replace('__MESSAGE__', messageObject.text);
+					$('.messageContainer').html(messageString);
+					if (messageObject.type == 'warning') {
+						$('.message').css({
+							"background-color": "#FFCC00"
+						});
+					} else {
+						$('.message').css({
+							"background-color": "#C9C909"
+						});
+					}
+				}
+
+				function clearMessage() {
+					$('.messageContainer').empty();
+				}
+
+				function displayMoves() {
+					$('#moveCount').text(_moveCounter);
+				}
 
 				function assignClickHandler() {
 					$('.cell').bind('click', function(){
@@ -312,15 +391,21 @@
 							swapNodes(emptyCell, this);
 
 							_moveCounter = _moveCounter + 1;
-							$('#moveCount').text(_moveCounter);
+
+							displayMoves();
 
 							if (isPuzzleSolved()) {
-								alert('You just solved the puzzle');
+								displayMessage({
+									"text": "Awesome, you solved the puzzle in " + _moveCounter + " moves. <a href='javascript:void(0)' class='share'>Publish to wall.</a>",
+									"type": "success"
+								});
 								$('.cell').unbind('click');
-								$("#share").show();
 							}
 						} else {
-							alert('Invalid click');
+							displayMessage({
+								"text": "Please click on a number next to empty cell",
+								"type": "warning"
+							});
 						}
 					});
 				}
@@ -341,7 +426,6 @@
 							 ]
 						 },
 						 function(response) {
-							 $("#share").hide();
 							 if (response && response.post_id) {
 								 document.location.href = "invite.php";
 							 } else {
@@ -357,9 +441,6 @@
 				$('#boardRows').val(_boardRows);
 				$('#boardColumns').val(_boardColumns);
 
-				//share link will be shown only on successfully solve
-				$("#share").hide();
-
 				createBoard(_boardRows, _boardColumns);
 
 				//event bindings - start
@@ -371,13 +452,16 @@
 						_boardColumns = parseInt(inputBoardColumns);
 
 						createBoard(_boardRows, _boardColumns);
-
+						//clear any previously assigned message
+						clearMessage();
+						//clear the previous score count
 						_moveCounter = 0;
+						displayMoves();
 					}
 				});
 
 				//wall publish 
-				$('#share').bind('click', function(){
+				$('.share').live('click', function(){
 					wallPublish();
 				});
 
@@ -395,11 +479,18 @@
 	<body>
 		<?php require_once "load_facebook_js.php"; ?>
 
-		<div class="fRight">
-			<fb:bookmark/>
+		<div class="actionLinkContainer">
+			<div class="fRight">
+				<fb:bookmark/>
+			</div>
+			<div class="fLeft">
+				<input class="fbButton" type="button" id="inviteFriends" value="Invite your friends to n-puzzle"/>
+			</div>
 		</div>
-		<div class="fLeft">
-			<input class="fbButton" type="button" id="inviteFriends" value="Invite your friends to n-puzzle"/>
+
+		<br/>	
+		
+		<div class="messageContainer">
 		</div>
 
 		<div class="otherStuff">
@@ -414,8 +505,10 @@
 				<input type="text" id="boardRows" size="1"/>X<input type="text" id="boardColumns" size="1"/>
 				<input type="button" value="New Game" id="newGameButton"/>
 			</p>
-			<p><a href="javascript:void(0)" id="share">Publish to wall</a></p>
-			<p><a href="invite.php"></a></p>
+		</div>
+
+		<div class="introduction">
+			Objective of n-puzzle is to arrange the numbers on the board in order. Begin by clicking on any number next to the empty cell.
 		</div>
 
 	</body>
