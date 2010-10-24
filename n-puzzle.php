@@ -49,6 +49,12 @@
 				text-align: center;
 			}
 
+			.moveCountContainer {
+				background-color: #F6F9F9;
+				padding: 5px;
+				margin: 2px;
+				font-family: "Trebuchet MS", tahoma, verdana, arial, sans-serif;
+			}
 		</style>
 
 		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
@@ -397,15 +403,16 @@
 		</div>
 
 		<div class="otherStuff">
-			<p>Moves:<span id="moveCount">0</span></p>
+			<p><span class="moveCountContainer">Moves:<span id="moveCount">0</span></span></p>
 		</div>
 
 		<div id="boardContainer">
 		</div>
 
 		<div class="otherStuff">
-			<p><input type='text' id='boardRows'/>X<input type='text' id='boardColumns'/>
-				<input type='button' value='New Game' id='newGameButton'/>
+			<p>
+				<input type="text" id="boardRows" size="1"/>X<input type="text" id="boardColumns" size="1"/>
+				<input type="button" value="New Game" id="newGameButton"/>
 			</p>
 			<p><a href="javascript:void(0)" id="share">Publish to wall</a></p>
 			<p><a href="invite.php"></a></p>
