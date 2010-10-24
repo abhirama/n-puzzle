@@ -16,6 +16,10 @@
 				background-color: red;
 				cursor: pointer;
 			}
+
+			.fRight {
+				float: right;
+			}
 		</style>
 
 		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
@@ -350,6 +354,7 @@
 	<body>
 		<?php require_once "load_facebook_js.php"; ?>
 
+		<div class="fRight"><fb:bookmark/></div>
 		<div id="mainContainer">
 		</div>
 		<p><input type='text' id='boardRows'/>X<input type='text' id='boardColumns'/>
