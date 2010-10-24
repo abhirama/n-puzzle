@@ -19,7 +19,7 @@
 			}
 
 			.cell {
-				background-color: red;
+				background-color: #CFC996;
 				cursor: pointer;
 			}
 
