@@ -27,6 +27,24 @@
 				float: right;
 			}
 
+			.fLeft {
+				float: left;
+			}
+
+			/*http://forum.developers.facebook.net/viewtopic.php?pid=15444*/
+			.fbButton {
+        background-color: #3b5998;
+        border-color: #d8dfea rgb(14, 31, 91) rgb(14, 31, 91) rgb(216, 223, 234);
+        border-style: solid;
+        border-width: 1px;
+        color: #fff;
+        font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+        font-size: 11px;
+        margin: 0 2px;
+        padding: 2px 18px;
+				cursor: pointer;
+			}
+
 		</style>
 
 		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
@@ -348,8 +366,14 @@
 					}
 				});
 
+				//wall publish 
 				$('#share').bind('click', function(){
 					wallPublish();
+				});
+
+				//invite friends
+				$('#inviteFriends').bind('click', function(){
+					document.location.href = "invite.php";	
 				});
 				//event bindings - end
 				//inline - end 
@@ -361,7 +385,12 @@
 	<body>
 		<?php require_once "load_facebook_js.php"; ?>
 
-		<div class="fRight"><fb:bookmark/></div>
+		<div class="fRight">
+			<fb:bookmark/>
+		</div>
+		<div class="fLeft">
+			<input class="fbButton" type="button" id="inviteFriends" value="Invite your friends to n-puzzle"/>
+		</div>
 		<div id="boardContainer">
 		</div>
 		<p><input type='text' id='boardRows'/>X<input type='text' id='boardColumns'/>
@@ -369,6 +398,6 @@
 		</p>
 		<p>Moves:<div id="moveCount">0</div></p>
 		<p><a href="javascript:void(0)" id="share">Publish to wall</a></p>
-		<p><a href="invite.php">Invite your friends to n-puzzle</a></p>
+		<p><a href="invite.php"></a></p>
 	</body>
 </html>
