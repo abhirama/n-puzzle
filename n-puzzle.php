@@ -396,6 +396,10 @@
 			<input class="fbButton" type="button" id="inviteFriends" value="Invite your friends to n-puzzle"/>
 		</div>
 
+		<div class="otherStuff">
+			<p>Moves:<span id="moveCount">0</span></p>
+		</div>
+
 		<div id="boardContainer">
 		</div>
 
@@ -403,7 +407,6 @@
 			<p><input type='text' id='boardRows'/>X<input type='text' id='boardColumns'/>
 				<input type='button' value='New Game' id='newGameButton'/>
 			</p>
-			<p>Moves:<div id="moveCount">0</div></p>
 			<p><a href="javascript:void(0)" id="share">Publish to wall</a></p>
 			<p><a href="invite.php"></a></p>
 		</div>
