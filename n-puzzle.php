@@ -52,7 +52,7 @@
 					//takes care of the cases where the player resets the board
 					$('#boardContainer table').remove();
 
-					$('#boardContainer').append('<table border="1" cell-padding="1" cell-spacing="1" id="board"></table>');
+					$('#boardContainer').append('<table border="10" bordercolor="#966F33" cell-padding="1" cell-spacing="1" id="board"></table>');
 					for (var row = 0; row < rows; ++row) {
 						$('#board').append('<tr></tr>');
 						for (var column = 0; column < columns; ++column) {
