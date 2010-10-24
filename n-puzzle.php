@@ -44,6 +44,10 @@
         padding: 2px 18px;
 				cursor: pointer;
 			}
+			
+			.otherStuff {
+				text-align: center;
+			}
 
 		</style>
 
@@ -391,13 +395,18 @@
 		<div class="fLeft">
 			<input class="fbButton" type="button" id="inviteFriends" value="Invite your friends to n-puzzle"/>
 		</div>
+
 		<div id="boardContainer">
 		</div>
-		<p><input type='text' id='boardRows'/>X<input type='text' id='boardColumns'/>
-			<input type='button' value='New Game' id='newGameButton'/>
-		</p>
-		<p>Moves:<div id="moveCount">0</div></p>
-		<p><a href="javascript:void(0)" id="share">Publish to wall</a></p>
-		<p><a href="invite.php"></a></p>
+
+		<div class="otherStuff">
+			<p><input type='text' id='boardRows'/>X<input type='text' id='boardColumns'/>
+				<input type='button' value='New Game' id='newGameButton'/>
+			</p>
+			<p>Moves:<div id="moveCount">0</div></p>
+			<p><a href="javascript:void(0)" id="share">Publish to wall</a></p>
+			<p><a href="invite.php"></a></p>
+		</div>
+
 	</body>
 </html>
