@@ -304,9 +304,9 @@
 						 function(response) {
 							 $("#share").hide();
 							 if (response && response.post_id) {
-								 document.location.href = "n-puzzle.php";
+								 document.location.href = "invite.php";
 							 } else {
-								 document.location.href = "n-puzzle.php";
+								 document.location.href = "invite.php";
 							 }
 						 }
 					 );
@@ -357,5 +357,6 @@
 		</p>
 		<p>Moves:<div id="moveCount">0</div></p>
 		<p><a href="javascript:void(0)" id="share">Publish to wall</a></p>
+		<p><a href="invite.php">Invite your friends to n-puzzle</a></p>
 	</body>
 </html>
