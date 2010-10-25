@@ -396,7 +396,7 @@
 
 							if (isPuzzleSolved()) {
 								displayMessage({
-									"text": "Awesome, you solved the puzzle in " + _moveCounter + " moves. <a href='javascript:void(0)' class='share'>Publish to wall.</a>",
+									"text": "Awesome, you solved the puzzle in " + _moveCounter + " moves. <input type='button' value='Publish to Wall' class='share fbButton'/>",
 									"type": "success"
 								});
 								$('.cell').unbind('click');
@@ -460,6 +460,10 @@
 					}
 				});
 
+				$('#boardRows').bind('change', function(){
+					$('#boardColumns').val($(this).val());
+				});
+
 				//wall publish 
 				$('.share').live('click', function(){
 					wallPublish();
@@ -502,7 +506,7 @@
 
 		<div class="otherStuff">
 			<p>
-				<input type="text" id="boardRows" size="1"/>X<input type="text" id="boardColumns" size="1"/>
+				<input type="text" id="boardRows" size="1"/>X<input type="text" id="boardColumns" size="1" disabled="disabled"/>
 				<input type="button" value="New Game" id="newGameButton"/>
 			</p>
 		</div>
