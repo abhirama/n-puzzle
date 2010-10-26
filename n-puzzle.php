@@ -118,6 +118,10 @@
 					//the last values of rows and columns are the empty cell row and column values
 					_emptyCellRow = row - 1;
 					_emptyCellColumn = column - 1;
+
+					//resizes the iframe so that scroll bars are not shown. 
+					//http://abhirama.wordpress.com/2010/09/21/preventing-scroll-bar-in-facebook-canvas-iframe-applications/
+					FB.Canvas.setSize();
 				}
 
 				function getCellId(row, column) {
