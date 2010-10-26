@@ -422,7 +422,7 @@
 								 )
 							 },
 							 action_links: [
-								 { text: 'n-puzzle', href: 'http://apps.facebook.com/npuzzle' }
+								{ text: 'n-puzzle', href: '<?php echo APP_URL; ?>' }
 							 ]
 						 },
 						 function(response) {
