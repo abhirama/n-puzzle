@@ -85,8 +85,8 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				//global variable declarations - start
-				var _boardRows = 2;
-				var _boardColumns = 2;
+				var _boardRows = 3;
+				var _boardColumns = 3;
 
 				//global variable to hold the current empty cell row and column
 				var _emptyCellRow = _boardRows - 1;
@@ -516,7 +516,7 @@
 		</div>
 
 		<div class="introduction">
-			Objective of n-puzzle is to arrange the numbers on the board in order. Begin by clicking on any number next to the empty cell.
+			Objective of n-puzzle is to arrange the numbers on the board in order. Begin by clicking on any number next to the empty cell. Read more about n-puzzle <a href="http://en.wikipedia.org/wiki/Fifteen_puzzle" target="_new">here</a>.
 		</div>
 
 	</body>
