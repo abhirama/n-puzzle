@@ -88,6 +88,9 @@
 				var _boardRows = 3;
 				var _boardColumns = 3;
 
+				//variable used to figure whether a function has been called for the first time
+				var _firstPass = true;
+
 				//global variable to hold the current empty cell row and column
 				var _emptyCellRow = _boardRows - 1;
 				var _emptyCellColumn = _boardColumns - 1;
@@ -121,7 +124,13 @@
 
 					//resizes the iframe so that scroll bars are not shown. 
 					//http://abhirama.wordpress.com/2010/09/21/preventing-scroll-bar-in-facebook-canvas-iframe-applications/
-					FB.Canvas.setSize();
+					//we have to check this as FB is not loaded the first time this function runs
+					if (!_firstPass) {
+						FB.Canvas.setSize();
+					} else {
+						_firstPass = false;
+					}
+
 				}
 
 				function getCellId(row, column) {
