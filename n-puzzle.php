@@ -81,7 +81,7 @@
 			}
 		</style>
 
-		<script type="text/JavaScript" src="jquery-1.4.3.js"></script> 
+		<script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script> 
 		<script type="text/javascript">
 			$(document).ready(function(){
 				//global variable declarations - start
